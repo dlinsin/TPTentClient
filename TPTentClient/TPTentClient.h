@@ -60,6 +60,11 @@
 - (void)postPostWithType:(NSString *)postType permissions:(NSDictionary *)permissions content:(NSDictionary *)content
                  success:(void (^)(void))success
                  failure:(void (^)(NSError *error))failure;
+
+// Retrieving Profile
+- (void)getProfileRepresentationWithEntity:(NSString *)entityURL
+                                   success:(void (^)(NSDictionary *statusRepresentations))success
+                                   failure:(void (^)(NSError *error))failure;
 @end
 
 // Tent post types
