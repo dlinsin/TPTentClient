@@ -1,0 +1,10 @@
+/build
+*/*.xcodeproj/*.mode1v3
+*/*.xcodeproj/*.pbxuser
+.DS_Store
+*.orig
+*.pbxuser
+*.perspective*
+*.xcworkspace
+*xcuserdata
+*/*.idea/*
