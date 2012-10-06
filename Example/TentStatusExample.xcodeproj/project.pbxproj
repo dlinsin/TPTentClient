@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6835E8920D16E72D63F7D747 /* TPTentProfileJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6835E8CF699C03C6DC213579 /* TPTentProfileJSONRequestOperation.m */; };
+		6835EDEB37C33682134DA471 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6835E1BC33D47B69DA6A350E /* Profile.m */; };
 		9F24FC86161AAC0100A93048 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24FC85161AAC0100A93048 /* UIKit.framework */; };
 		9F24FC88161AAC0100A93048 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24FC87161AAC0100A93048 /* Foundation.framework */; };
 		9F24FC8A161AAC0100A93048 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24FC89161AAC0100A93048 /* CoreGraphics.framework */; };
@@ -42,6 +44,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6835E1BC33D47B69DA6A350E /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
+		6835E8CF699C03C6DC213579 /* TPTentProfileJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTentProfileJSONRequestOperation.m; sourceTree = "<group>"; };
+		6835EA80B7CCA81AE1ED51AB /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
+		6835EE100D8183331229857F /* TPTentProfileJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTentProfileJSONRequestOperation.h; sourceTree = "<group>"; };
 		9F24FC81161AAC0100A93048 /* TentStatusExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TentStatusExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F24FC85161AAC0100A93048 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9F24FC87161AAC0100A93048 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -187,6 +193,8 @@
 		9F24FCB2161AB09500A93048 /* TPTentClient */ = {
 			isa = PBXGroup;
 			children = (
+				6835EE100D8183331229857F /* TPTentProfileJSONRequestOperation.h */,
+				6835E8CF699C03C6DC213579 /* TPTentProfileJSONRequestOperation.m */,
 				9F24FCB3161AB09500A93048 /* TPTentClient.h */,
 				9F24FCB4161AB09500A93048 /* TPTentClient.m */,
 				9F24FEFF161AB80E00A93048 /* TPTentHTTPClient.h */,
@@ -244,6 +252,8 @@
 		9FB912E5161ACAD60092FA0F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6835EA80B7CCA81AE1ED51AB /* Profile.h */,
+				6835E1BC33D47B69DA6A350E /* Profile.m */,
 				9FB912E1161ACAC10092FA0F /* StatusPost.h */,
 				9FB912E2161ACAC10092FA0F /* StatusPost.m */,
 			);
@@ -378,6 +388,8 @@
 				9F83DF20161BC0AC0078F22C /* AccountViewController.m in Sources */,
 				9F859A84161BD4D300CE3388 /* NSURL+TPEquivalence.m in Sources */,
 				9F859A8C161D0C0700CE3388 /* NewStatusPostViewController.m in Sources */,
+				6835E8920D16E72D63F7D747 /* TPTentProfileJSONRequestOperation.m in Sources */,
+				6835EDEB37C33682134DA471 /* Profile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

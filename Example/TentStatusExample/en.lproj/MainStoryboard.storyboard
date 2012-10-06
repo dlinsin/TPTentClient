@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mNZ-jJ-0Ik">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C54" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="mNZ-jJ-0Ik">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
     </dependencies>
@@ -168,15 +168,72 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="8le-42-Uuf">
+                                <cells>
+                                    <tableViewCell hidden="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="96" id="KCA-ex-ul4">
+                                        <rect key="frame" x="0.0" y="76" width="320" height="98"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="1" width="300" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fqr-L4-cHW">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="91" id="cSN-lG-eEA"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Profile Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YeY-jb-iHE">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="19" id="wiw-Fv-Vsd"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="none" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="190" translatesAutoresizingMaskIntoConstraints="NO" id="EIr-Be-nI9">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="57" id="y8N-Eh-NC1"/>
+                                                    </constraints>
+                                                    <string key="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla </string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="fqr-L4-cHW" firstAttribute="centerY" secondItem="KCA-ex-ul4" secondAttribute="centerY" type="default" id="GxY-2f-yRp"/>
+                                            <constraint firstItem="EIr-Be-nI9" firstAttribute="top" secondItem="YeY-jb-iHE" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="O09-zf-2o3"/>
+                                            <constraint firstItem="YeY-jb-iHE" firstAttribute="leading" secondItem="fqr-L4-cHW" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="RMQ-O7-jUb"/>
+                                            <constraint firstItem="EIr-Be-nI9" firstAttribute="trailing" secondItem="YeY-jb-iHE" secondAttribute="trailing" type="default" id="ctd-ZE-rEK"/>
+                                            <constraint firstItem="fqr-L4-cHW" firstAttribute="leading" secondItem="KCA-ex-ul4" secondAttribute="leading" constant="15" id="fwT-1Y-8qu"/>
+                                            <constraint firstItem="EIr-Be-nI9" firstAttribute="leading" secondItem="fqr-L4-cHW" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="hkg-wq-Fg7"/>
+                                            <constraint firstItem="YeY-jb-iHE" firstAttribute="top" secondItem="fqr-L4-cHW" secondAttribute="top" type="default" id="oJa-5c-BA1"/>
+                                            <constraint firstItem="EIr-Be-nI9" firstAttribute="bottom" secondItem="fqr-L4-cHW" secondAttribute="bottom" type="default" id="xSw-zL-ogW"/>
+                                        </constraints>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="WdH-tn-8Ga" id="Qid-bv-GdJ"/>
                             <outlet property="delegate" destination="WdH-tn-8Ga" id="8U8-BA-wWh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="User" id="fol-ee-SVh"/>
+                    <navigationItem key="navigationItem" title="User" id="fol-ee-SVh">
+                        <barButtonItem key="rightBarButtonItem" title="Timeline" id="b3s-57-8dE">
+                            <connections>
+                                <action selector="showTimeline" destination="WdH-tn-8Ga" id="KAD-UH-mGZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="entityURIField" destination="sJ0-yg-MbO" id="EDz-pb-Udc"/>
+                        <outlet property="profileBio" destination="EIr-Be-nI9" id="TY5-cx-XSi"/>
+                        <outlet property="profileCell" destination="KCA-ex-ul4" id="EsK-uk-gBE"/>
+                        <outlet property="profileImageView" destination="fqr-L4-cHW" id="liw-xg-rx8"/>
+                        <outlet property="profileName" destination="YeY-jb-iHE" id="U2s-IB-ECL"/>
                         <segue destination="jN9-S8-eBF" kind="push" identifier="ShowTimeline" id="ame-zZ-DTE"/>
                     </connections>
                 </tableViewController>
@@ -226,6 +283,10 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AccountViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="entityURIField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="profileBio" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="profileCell" candidateClass="UITableViewCell"/>
+                <relationship kind="outlet" name="profileImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profileName" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
