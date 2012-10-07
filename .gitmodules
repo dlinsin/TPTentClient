@@ -4,3 +4,6 @@
 [submodule "Example/Vendor/AFNetworking"]
 	path = Example/Vendor/AFNetworking
 	url = git://github.com/AFNetworking/AFNetworking.git
+[submodule "Example/Vendor/UIKeyChainStore"]
+	path = Example/Vendor/UIKeyChainStore
+	url = git://github.com/kishikawakatsumi/UICKeyChainStore.git
