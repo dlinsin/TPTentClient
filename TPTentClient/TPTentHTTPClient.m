@@ -24,6 +24,8 @@
 #import "TPTentHTTPClient.h"
 #import "AFJSONRequestOperation.h"
 #import "NSURL+SSToolkitAdditions.h"
+#import "UICKeyChainStore.h"
+#import "NSURL+TPEquivalence.h"
 #import <CommonCrypto/CommonHMAC.h>
 
 #pragma mark - Functions and constants
@@ -112,7 +114,15 @@ static NSString *const kTPTentContentType = @"application/vnd.tent.v0+json";
     [self setParameterEncoding:AFJSONParameterEncoding];
 	[self setDefaultHeader:@"Accept" value:kTPTentContentType];
     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithObject:kTPTentContentType]];
-    
+
+    if ([url isEquivalent:[NSURL URLWithString:[UICKeyChainStore stringForKey:BASE_URL]]]) {
+        self.tentAccessToken = [UICKeyChainStore stringForKey:ACCESS_TOKEN];
+        self.tentMacKey = [UICKeyChainStore stringForKey:MAC_KEY];
+        self.tentMacAlgorithm = [UICKeyChainStore stringForKey:MAC_ALGORITHM];
+        self.tentMacKeyId = [UICKeyChainStore stringForKey:MAC_KEY_ID];
+        self.tentClientId = [UICKeyChainStore stringForKey:CLIENT_ID];
+    }
+
     return self;
 }
 
@@ -178,12 +188,13 @@ static NSString *const kTPTentContentType = @"application/vnd.tent.v0+json";
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-        self.tentMacAlgorithm = JSON[@"mac_algorithm"];
-        self.tentMacKey = JSON[@"mac_key"];
-        self.tentMacKeyId = JSON[@"mac_key_id"];
+        self.tentMacAlgorithm = JSON[MAC_ALGORITHM];
+        self.tentMacKey = JSON[MAC_KEY];
+        self.tentMacKeyId = JSON[MAC_KEY_ID];
         self.tentClientId = JSON[@"id"];
         
-        NSDictionary *authRequestParams = @{@"client_id": self.tentClientId,
+        NSDictionary *authRequestParams = @{
+        CLIENT_ID: self.tentClientId,
             @"tent_profile_info_types": @"all",
             @"tent_post_types": @"all",
             @"redirect_uri": [NSString stringWithFormat:@"%@://oauth", self.delegate.customURLScheme],
@@ -220,11 +231,18 @@ static NSString *const kTPTentContentType = @"application/vnd.tent.v0+json";
     __weak TPTentHTTPClient *weakSelf = self;
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        if (JSON[@"access_token"]) {
+        if (JSON[ACCESS_TOKEN]) {
             
-            weakSelf.tentAccessToken = JSON[@"access_token"];
-            weakSelf.tentMacKey = JSON[@"mac_key"];
-            
+            weakSelf.tentAccessToken = JSON[ACCESS_TOKEN];
+            weakSelf.tentMacKey = JSON[MAC_KEY];
+
+            [UICKeyChainStore setString:[weakSelf.baseURL absoluteString] forKey:BASE_URL];
+            [UICKeyChainStore setString:weakSelf.tentAccessToken forKey:ACCESS_TOKEN];
+            [UICKeyChainStore setString:weakSelf.tentMacKey forKey:MAC_KEY];
+            [UICKeyChainStore setString:weakSelf.tentMacAlgorithm forKey:MAC_ALGORITHM];
+            [UICKeyChainStore setString:weakSelf.tentMacKeyId forKey:MAC_KEY_ID];
+            [UICKeyChainStore setString:weakSelf.tentClientId forKey:CLIENT_ID];
+
             if ([weakSelf.delegate respondsToSelector:@selector(httpClientDidRegisterWithBaseURL:)]) {
                 [weakSelf.delegate httpClientDidRegisterWithBaseURL:self];
             }

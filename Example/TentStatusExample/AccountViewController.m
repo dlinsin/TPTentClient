@@ -25,6 +25,7 @@
 #import "AccountViewController.h"
 #import "TentStatusClient.h"
 #import "NSURL+TPEquivalence.h"
+#import "UICKeyChainStore.h"
 
 @interface AccountViewController () <UITextFieldDelegate>
 
@@ -39,7 +40,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    // comment this in for resetting the keychain values
+//    [UICKeyChainStore removeItemForKey:BASE_URL];
+//    [UICKeyChainStore removeItemForKey:ACCESS_TOKEN];
+//    [UICKeyChainStore removeItemForKey:MAC_KEY];
+//    [UICKeyChainStore removeItemForKey:MAC_KEY_ID];
+//    [UICKeyChainStore removeItemForKey:MAC_ALGORITHM];
+//    [UICKeyChainStore removeItemForKey:CLIENT_ID];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didAuthorizeWithEntity:)
                                                  name:TPTentClientDidAuthorizeWithTentServerNotification
@@ -49,6 +58,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
+    if ([UICKeyChainStore stringForKey:ENTITY] && [UICKeyChainStore stringForKey:BASE_URL]) {
+        self.entityURIField.text = [UICKeyChainStore stringForKey:ENTITY];
+        self.entityURL = [NSURL URLWithString:self.entityURIField.text];
+        self.tentServerURL = [NSURL URLWithString:[UICKeyChainStore stringForKey:BASE_URL]];
+    }
     
     if (self.entityURIField.text.length == 0) {
         self.entityURIField.text = @"https://";
@@ -65,7 +80,7 @@
     }
     
     [textField resignFirstResponder];
-    
+
     if ([self.entityURL isEquivalent:entityURL] &&
         [[TentStatusClient sharedClient] isAuthorizedForTentServer:self.tentServerURL]) {
         [self showTimeline];
@@ -73,19 +88,25 @@
     }
     
     self.entityURL = entityURL;
-    
+
+    [self doAuthorize];
+
+    return YES;
+}
+
+- (void)doAuthorize
+{
     [[TentStatusClient sharedClient] discoverTentServerForEntityURL:self.entityURL success:^(NSURL *canonicalServerURL, NSURL *canonicalEntityURL) {
+        [UICKeyChainStore setString:self.entityURIField.text forKey:ENTITY];
         self.entityURL = canonicalEntityURL;
         if ([self.tentServerURL isEquivalent:canonicalServerURL] &&
-            [[TentStatusClient sharedClient] isAuthorizedForTentServer:self.tentServerURL]) {
+                [[TentStatusClient sharedClient] isAuthorizedForTentServer:self.tentServerURL]) {
             [self showTimeline];
         } else {
             self.tentServerURL = canonicalServerURL;
-            [[TentStatusClient sharedClient] authorizeForTentServerURL:self.tentServerURL];
-        }
-    } failure:nil];
-
-    return YES;
+                [[TentStatusClient sharedClient] authorizeForTentServerURL:self.tentServerURL];
+            }
+        } failure:nil];
 }
 
 - (void)didAuthorizeWithEntity:(NSDictionary *)notification

@@ -25,6 +25,14 @@
 
 @protocol TPTentHTTPDelegate;
 
+static NSString *const BASE_URL = @"base_url";
+static NSString *const ENTITY = @"entity";
+static NSString *const ACCESS_TOKEN = @"access_token";
+static NSString *const MAC_KEY = @"mac_key";
+static NSString *const MAC_ALGORITHM = @"mac_algorithm";
+static NSString *const MAC_KEY_ID = @"mac_key_id";
+static NSString *const CLIENT_ID = @"client_id";
+
 @interface TPTentHTTPClient : AFHTTPClient
 
 @property (nonatomic, weak) id<TPTentHTTPDelegate> delegate;

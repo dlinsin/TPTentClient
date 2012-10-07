@@ -78,11 +78,22 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
     [self headTentServerWithDiscoveryHTTPClient:discoveryHTTPClient success:success failure:failure];
 }
 
+
 #pragma mark OAuth
+
+- (void)initHttpClient:(NSURL *)url
+{
+    if (![self.httpClient.baseURL isEquivalent:url]) {
+        self.httpClient = [[TPTentHTTPClient alloc] initWithBaseURL:url];
+        self.httpClient.delegate = self;
+    }
+}
 
 - (BOOL)isAuthorizedForTentServer:(NSURL *)url
 {
-    if (self.httpClient && [self.httpClient.baseURL isEquivalent:url] && [self.httpClient isRegisteredWithBaseURL]) {
+    [self initHttpClient:url];
+
+    if ([self.httpClient isRegisteredWithBaseURL]) {
         return YES;
     }
     
@@ -101,12 +112,9 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
     if (self.httpClient.isRegisteredWithBaseURL && [self.httpClient.baseURL isEqual:url]) {
         return;
     }
-    
-    if (![self.httpClient.baseURL isEqual:url]) {
-        self.httpClient = [[TPTentHTTPClient alloc] initWithBaseURL:url];
-        self.httpClient.delegate = self;
-    }
-    
+
+    [self initHttpClient:url];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:TPTentClientWillAuthorizeWithTentServerNotification
                                                         object:nil
                                                       userInfo:@{TPTentClientAuthorizingWithTentServerURLKey: url}];
