@@ -29,5 +29,6 @@
 @property (nonatomic, strong) NSDate *publishedAtDate;
 @property (nonatomic, strong) NSString *entityURI;
 @property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSString *ident;
 
 @end

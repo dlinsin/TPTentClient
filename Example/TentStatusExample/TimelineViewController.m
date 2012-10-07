@@ -57,20 +57,37 @@
     
     [[TentStatusClient sharedClient] getPostRepresentationsWithSuccess:^(NSArray *representations) {
         
-        NSMutableArray *postArray = [NSMutableArray arrayWithCapacity:[representations count]];
+        NSMutableArray *postArray = [NSMutableArray array];
         for (NSDictionary *representation in representations) {
             if ([representation[@"type"] isEqualToString:TPTentClientPostTypeStatus]) {
                 StatusPost *statusPost = [[StatusPost alloc] init];
                 statusPost.entityURI = representation[@"entity"];
                 statusPost.publishedAtDate = [NSDate dateWithTimeIntervalSince1970:[representation[@"published_at"] doubleValue]];
+                statusPost.ident = representation[@"id"];
                 NSDictionary *content = representation[@"content"];
                 statusPost.status = content[@"text"];
-                [postArray addObject:statusPost];
+                if (![weakSelf.statusArray containsObject:statusPost]) {
+                    [postArray addObject:statusPost];
+                }
             }
         }
+        StatusPost *topPost = nil;
+        if ([weakSelf.statusArray count] > 0) {
+            topPost = [weakSelf.statusArray objectAtIndex:0];
+        }
+
+        [postArray addObjectsFromArray:weakSelf.statusArray];
         weakSelf.statusArray = postArray;
-        
+
         [weakSelf.tableView reloadData];
+
+        if (topPost) {
+            int idxOfOldTopPost = [weakSelf.statusArray indexOfObject:topPost];
+            NSIndexPath *oldTopPostIdx = [NSIndexPath indexPathForRow:idxOfOldTopPost inSection:0];
+            [weakSelf.tableView scrollToRowAtIndexPath:oldTopPostIdx atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        }
+
+
         if (sender) {
             [sender endRefreshing];
         }
