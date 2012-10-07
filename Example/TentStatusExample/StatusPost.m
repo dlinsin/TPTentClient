@@ -26,4 +26,28 @@
 
 @implementation StatusPost
 
+- (BOOL)isEqual:(id)object {
+    if (![object isKindOfClass:[StatusPost class]]) {
+        return NO;
+    }
+    StatusPost *other = (StatusPost*)object;
+    if (_ident && ![_ident isEqualToString:other.ident]) {
+        return NO;
+    }
+    return YES;
+}
+
+- (NSUInteger)hash {
+    int prime = 31;
+    int result = 1;
+
+    result = prime * result + [self.ident hash];
+
+    return (NSUInteger) result;
+}
+
+- (NSString*)description {
+    return [NSString stringWithFormat:@"ident:%@, status:%@, publishedAtDate:%@, entityURI:%@", [_ident description], [_status description], [_publishedAtDate description], [_entityURI description]];
+}
+
 @end
