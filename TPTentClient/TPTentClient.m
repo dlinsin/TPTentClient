@@ -111,7 +111,7 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
                           success:(void (^)())success
                           failure:(void (^)(NSError *error))failure
 {
-    if (self.httpClient.isRegisteredWithBaseURL && [self.httpClient.baseURL isEqual:url]) {
+    if (self.httpClient.isRegisteredWithBaseURL && [self.httpClient.baseURL isEquivalent:url]) {
         return;
     }
 
