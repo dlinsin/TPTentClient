@@ -61,6 +61,7 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
 @interface TPTentClient ()
 
 @property (nonatomic, strong) TPTentHTTPClient *httpClient;
+@property (nonatomic, strong) AFHTTPClient *noAuthHTTPClient;
 
 @end
 
@@ -189,8 +190,10 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
                                    success:(void (^)(NSDictionary *))success
                                    failure:(void (^)(NSError *))failure
 {
-    AFHTTPClient *profileURLHTTPClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:entityURL]];
-    NSMutableURLRequest *headRequest = [profileURLHTTPClient requestWithMethod:@"HEAD" path:@"/" parameters:nil];
+    if (![self.noAuthHTTPClient.baseURL isEquivalent:[NSURL URLWithString:entityURL]]) {
+        self.noAuthHTTPClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:entityURL]];
+    }
+    NSMutableURLRequest *headRequest = [self.noAuthHTTPClient requestWithMethod:@"HEAD" path:@"/" parameters:nil];
 
     AFHTTPRequestOperation *headOperation = [[AFHTTPRequestOperation alloc] initWithRequest:headRequest];
 
@@ -219,7 +222,7 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
         failure(error);
     }];
 
-    [profileURLHTTPClient enqueueHTTPRequestOperation:headOperation];
+    [self.noAuthHTTPClient enqueueHTTPRequestOperation:headOperation];
 
 }
 

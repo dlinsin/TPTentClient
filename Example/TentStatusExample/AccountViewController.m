@@ -113,7 +113,6 @@
 
 - (void)loadProfile {
     [[TentStatusClient sharedClient] getProfileRepresentationWithEntity:@"https://dlinsin.tent.is" success:^(NSDictionary *profileRepresentations) {
-        NSLog(@"%@", profileRepresentations);
         [self populateProfile:[[Profile alloc] initWithDictionary:profileRepresentations]];
     } failure:^(NSError *error) {
         NSLog(@"erro:%@", error);
