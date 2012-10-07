@@ -26,12 +26,18 @@
 #import "TentStatusClient.h"
 #import "NSURL+TPEquivalence.h"
 #import "UICKeyChainStore.h"
+#import "Profile.h"
 
 @interface AccountViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UITextField *entityURIField;
 @property (nonatomic, strong) NSURL *entityURL;
 @property (nonatomic, strong) NSURL *tentServerURL;
+
+@property (nonatomic, strong) IBOutlet UITableViewCell *profileCell;
+@property (nonatomic, strong) IBOutlet UIImageView *profileImageView;
+@property (nonatomic, strong) IBOutlet UILabel *profileName;
+@property (nonatomic, strong) IBOutlet UILabel *profileBio;
 
 @end
 
@@ -83,7 +89,7 @@
 
     if ([self.entityURL isEquivalent:entityURL] &&
         [[TentStatusClient sharedClient] isAuthorizedForTentServer:self.tentServerURL]) {
-        [self showTimeline];
+        [self loadProfile];
         return YES;
     }
     
@@ -100,8 +106,8 @@
         [UICKeyChainStore setString:self.entityURIField.text forKey:ENTITY];
         self.entityURL = canonicalEntityURL;
         if ([self.tentServerURL isEquivalent:canonicalServerURL] &&
-                [[TentStatusClient sharedClient] isAuthorizedForTentServer:self.tentServerURL]) {
-            [self showTimeline];
+            [[TentStatusClient sharedClient] isAuthorizedForTentServer:self.tentServerURL]) {
+            [self loadProfile];
         } else {
             self.tentServerURL = canonicalServerURL;
                 [[TentStatusClient sharedClient] authorizeForTentServerURL:self.tentServerURL];
@@ -111,12 +117,27 @@
 
 - (void)didAuthorizeWithEntity:(NSDictionary *)notification
 {
-    [self showTimeline];
+    [self loadProfile];
 }
 
-- (void)showTimeline
+- (void)populateProfile:(Profile*)profile {
+    self.profileName.text = profile.name;
+    self.profileBio.text = profile.bio;
+    self.profileImageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:profile.avatar_url]]];
+    self.profileCell.hidden = NO;
+}
+
+- (IBAction)showTimeline
 {
     [self performSegueWithIdentifier:@"ShowTimeline" sender:self];
+}
+
+- (void)loadProfile {
+    [[TentStatusClient sharedClient] getProfileRepresentationWithEntity:@"https://dlinsin.tent.is" success:^(NSDictionary *profileRepresentations) {
+        [self populateProfile:[[Profile alloc] initWithDictionary:profileRepresentations]];
+    } failure:^(NSError *error) {
+        NSLog(@"erro:%@", error);
+    }];
 }
 
 - (void)dealloc

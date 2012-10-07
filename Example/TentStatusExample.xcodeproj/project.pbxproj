@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6835E53C24D5C71A51E4DAA5 /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6835E44BB15E7EA0EF875D7D /* UICKeyChainStore.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		6835E8330BFA285809387AD7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6835E38390B0F179EBB33DFA /* Security.framework */; };
+		6835E370D6FB8B7D17356E98 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6835E76F0B59CCC001A55915 /* Security.framework */; };
+		6835E8920D16E72D63F7D747 /* TPTentProfileJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6835E8CF699C03C6DC213579 /* TPTentProfileJSONRequestOperation.m */; };
+		6835EAAB248D7087A797A4E7 /* UICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6835E245DADEEB0BEFCE7A05 /* UICKeyChainStore.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6835EDEB37C33682134DA471 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6835E1BC33D47B69DA6A350E /* Profile.m */; };
 		9F24FC86161AAC0100A93048 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24FC85161AAC0100A93048 /* UIKit.framework */; };
 		9F24FC88161AAC0100A93048 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24FC87161AAC0100A93048 /* Foundation.framework */; };
 		9F24FC8A161AAC0100A93048 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F24FC89161AAC0100A93048 /* CoreGraphics.framework */; };
@@ -44,9 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6835E38390B0F179EBB33DFA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		6835E44BB15E7EA0EF875D7D /* UICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICKeyChainStore.m; path = Vendor/UIKeyChainStore/UICKeyChainStore.m; sourceTree = "<group>"; };
-		6835E54D48C3DC2610453879 /* UICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Vendor/UIKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
+		6835E1BC33D47B69DA6A350E /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
+		6835E245DADEEB0BEFCE7A05 /* UICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICKeyChainStore.m; path = Vendor/UIKeyChainStore/UICKeyChainStore.m; sourceTree = "<group>"; };
+		6835E606A076F924A0D6C158 /* UICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICKeyChainStore.h; path = Vendor/UIKeyChainStore/UICKeyChainStore.h; sourceTree = "<group>"; };
+		6835E76F0B59CCC001A55915 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		6835E8CF699C03C6DC213579 /* TPTentProfileJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPTentProfileJSONRequestOperation.m; sourceTree = "<group>"; };
+		6835EA80B7CCA81AE1ED51AB /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
+		6835EE100D8183331229857F /* TPTentProfileJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPTentProfileJSONRequestOperation.h; sourceTree = "<group>"; };
 		9F24FC81161AAC0100A93048 /* TentStatusExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TentStatusExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F24FC85161AAC0100A93048 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9F24FC87161AAC0100A93048 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -116,18 +122,18 @@
 				9F24FC86161AAC0100A93048 /* UIKit.framework in Frameworks */,
 				9F24FC88161AAC0100A93048 /* Foundation.framework in Frameworks */,
 				9F24FC8A161AAC0100A93048 /* CoreGraphics.framework in Frameworks */,
-				6835E8330BFA285809387AD7 /* Security.framework in Frameworks */,
+				6835E370D6FB8B7D17356E98 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6835E0D8F2F3C53868C1F412 /* UIKeyChainStore */ = {
+		6835EBE1DFA8DBC461AD8BC7 /* UIKeyChainStore */ = {
 			isa = PBXGroup;
 			children = (
-				6835E44BB15E7EA0EF875D7D /* UICKeyChainStore.m */,
-				6835E54D48C3DC2610453879 /* UICKeyChainStore.h */,
+				6835E245DADEEB0BEFCE7A05 /* UICKeyChainStore.m */,
+				6835E606A076F924A0D6C158 /* UICKeyChainStore.h */,
 			);
 			name = UIKeyChainStore;
 			sourceTree = "<group>";
@@ -153,7 +159,7 @@
 		9F24FC84161AAC0100A93048 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6835E38390B0F179EBB33DFA /* Security.framework */,
+				6835E76F0B59CCC001A55915 /* Security.framework */,
 				9F24FC85161AAC0100A93048 /* UIKit.framework */,
 				9F24FC87161AAC0100A93048 /* Foundation.framework */,
 				9F24FC89161AAC0100A93048 /* CoreGraphics.framework */,
@@ -196,7 +202,7 @@
 				9F24FCB2161AB09500A93048 /* TPTentClient */,
 				9F24FED7161AB0C500A93048 /* AFNetworking */,
 				9F24FE3C161AB0BE00A93048 /* SSToolkit */,
-				6835E0D8F2F3C53868C1F412 /* UIKeyChainStore */,
+				6835EBE1DFA8DBC461AD8BC7 /* UIKeyChainStore */,
 			);
 			name = Vendor;
 			sourceTree = "<group>";
@@ -204,6 +210,8 @@
 		9F24FCB2161AB09500A93048 /* TPTentClient */ = {
 			isa = PBXGroup;
 			children = (
+				6835EE100D8183331229857F /* TPTentProfileJSONRequestOperation.h */,
+				6835E8CF699C03C6DC213579 /* TPTentProfileJSONRequestOperation.m */,
 				9F24FCB3161AB09500A93048 /* TPTentClient.h */,
 				9F24FCB4161AB09500A93048 /* TPTentClient.m */,
 				9F24FEFF161AB80E00A93048 /* TPTentHTTPClient.h */,
@@ -261,6 +269,8 @@
 		9FB912E5161ACAD60092FA0F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6835EA80B7CCA81AE1ED51AB /* Profile.h */,
+				6835E1BC33D47B69DA6A350E /* Profile.m */,
 				9FB912E1161ACAC10092FA0F /* StatusPost.h */,
 				9FB912E2161ACAC10092FA0F /* StatusPost.m */,
 			);
@@ -395,7 +405,9 @@
 				9F83DF20161BC0AC0078F22C /* AccountViewController.m in Sources */,
 				9F859A84161BD4D300CE3388 /* NSURL+TPEquivalence.m in Sources */,
 				9F859A8C161D0C0700CE3388 /* NewStatusPostViewController.m in Sources */,
-				6835E53C24D5C71A51E4DAA5 /* UICKeyChainStore.m in Sources */,
+				6835E8920D16E72D63F7D747 /* TPTentProfileJSONRequestOperation.m in Sources */,
+				6835EDEB37C33682134DA471 /* Profile.m in Sources */,
+				6835EAAB248D7087A797A4E7 /* UICKeyChainStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

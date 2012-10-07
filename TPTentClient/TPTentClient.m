@@ -25,6 +25,7 @@
 #import "TPTentHTTPClient.h"
 #import "NSURL+TPEquivalence.h"
 #import "AFJSONRequestOperation.h"
+#import "TPTentProfileJSONRequestOperation.h"
 
 
 #pragma mark - Constants
@@ -60,6 +61,7 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
 @interface TPTentClient ()
 
 @property (nonatomic, strong) TPTentHTTPClient *httpClient;
+@property (nonatomic, strong) AFHTTPClient *noAuthHTTPClient;
 
 @end
 
@@ -191,6 +193,47 @@ static NSString * const TPTentClientProfileInfoTypeBasic = @"https://tent.io/typ
     
     [self.httpClient enqueueHTTPRequestOperation:operation];
 }
+
+- (void)getProfileRepresentationWithEntity:(NSString *)entityURL
+                                   success:(void (^)(NSDictionary *))success
+                                   failure:(void (^)(NSError *))failure
+{
+    if (![self.noAuthHTTPClient.baseURL isEquivalent:[NSURL URLWithString:entityURL]]) {
+        self.noAuthHTTPClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:entityURL]];
+    }
+    NSMutableURLRequest *headRequest = [self.noAuthHTTPClient requestWithMethod:@"HEAD" path:@"/" parameters:nil];
+
+    AFHTTPRequestOperation *headOperation = [[AFHTTPRequestOperation alloc] initWithRequest:headRequest];
+
+    [headOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSURL *profileURL = [self profileURLFromCompletedHeadOperation:operation];
+        if (profileURL) {
+            // get profile
+            AFHTTPClient *profileHTTPClient = [[AFHTTPClient alloc] initWithBaseURL:profileURL];
+            [profileHTTPClient setDefaultHeader:@"Accept" value:@"application/vnd.tent.v0+json"];
+            NSMutableURLRequest *profileRequest = [profileHTTPClient requestWithMethod:@"GET" path:@"" parameters:nil];
+            TPTentProfileJSONRequestOperation *profileOperation = [TPTentProfileJSONRequestOperation JSONRequestOperationWithRequest:profileRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                if (success) {
+                    success((NSDictionary *)JSON);
+                }
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                if (failure) {
+                    failure(error);
+                }
+            }];
+            [profileHTTPClient enqueueHTTPRequestOperation:profileOperation];
+        } else {
+            NSError *error = [[NSError alloc] initWithDomain:@"TPTentClient" code:-1 userInfo:[NSDictionary dictionaryWithObject:@"No profile URL retrieved!" forKey:@"reason"]];
+            failure(error);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+
+    [self.noAuthHTTPClient enqueueHTTPRequestOperation:headOperation];
+
+}
+
 
 #pragma mark - TPTentHTTPClientDelegate conformance
 
